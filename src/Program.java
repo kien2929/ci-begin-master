@@ -1,7 +1,5 @@
-import base.GameCanvas;
-import base.GameWindow;
-
-import javax.swing.*;
+import base.game.GameCanvas;
+import base.game.GameWindow;
 
 public class Program {
     public static void main(String[] args) {

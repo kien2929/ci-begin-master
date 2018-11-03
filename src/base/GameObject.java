@@ -7,21 +7,21 @@ import java.awt.image.BufferedImage;
 
 public class GameObject {
     //thuoc tinh
-    BufferedImage image;
-    int x;
-    int y;
+    public BufferedImage image;
+    public Vector2D position;
     //phuongthuc
     public GameObject(){
+        this.position=new Vector2D();
 
     }
     public void run(){
 
-        if(this.x<350){
-            this.x++;
-        }
+//        if(this.position.x<350){
+//            this.position.x++;
+//        }
     }
 
     public void render(Graphics g){
-        g.drawImage(this.image,this.x,this.y,null);
+        g.drawImage(this.image,(int)this.position.x,(int)this.position.y,null);
     }
 }
