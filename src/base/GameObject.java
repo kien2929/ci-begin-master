@@ -1,5 +1,6 @@
 package base;
 
+import renderer.Renderer;
 import sun.awt.image.BufferedImageDevice;
 
 import java.awt.*;
@@ -7,8 +8,9 @@ import java.awt.image.BufferedImage;
 
 public class GameObject {
     //thuoc tinh
-    public BufferedImage image;
+
     public Vector2D position;
+    public Renderer renderer;
     //phuongthuc
     public GameObject(){
         this.position=new Vector2D();
@@ -22,6 +24,9 @@ public class GameObject {
     }
 
     public void render(Graphics g){
-        g.drawImage(this.image,(int)this.position.x,(int)this.position.y,null);
+        if(this.renderer !=null){
+            this.renderer.render(g,this);
+        }
+
     }
 }
