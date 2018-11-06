@@ -34,7 +34,7 @@ public class Enemy extends GameObject {
      if(this.position.x<=0){
          check=true;
      }
-     if(this.position.x>=(Settings.BACKGROUND_WIDTH-IMAGE_WIDTH)){
+     if(this.position.x>=(Settings.BACKGROUND_WIDTH-IMAGE_WIDTH-30)){
          check=false;
      }
      if(check){

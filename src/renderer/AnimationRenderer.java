@@ -19,7 +19,7 @@ public class AnimationRenderer extends Renderer {
     @Override
     public void render(Graphics g, GameObject master) {
         g.drawImage(this.images.get(currentimageindex), (int) master.position.x, (int) master.position.y, null);
-        this.currentimageindex++;
+
 
         if (count >= 10) {
             this.currentimageindex++;
