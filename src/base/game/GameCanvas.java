@@ -14,50 +14,37 @@ import java.util.ArrayList;
 public class GameCanvas extends JPanel {
     public GameObject background;
     public GameObject player;
-    public static ArrayList<PlayerBullet> bullets;
-    public static ArrayList<Enemy> enemies;
-    public static ArrayList<EnemyBullet> enemyBullets;
+//    public static ArrayList<PlayerBullet> bullets = new ArrayList<>();
+//    public static ArrayList<Enemy> enemies = new ArrayList<>();
+//    public static ArrayList<EnemyBullet> enemyBullets = new ArrayList<>();
+//    public static ArrayList<GameObject> gameObjects = new ArrayList<>();
+
     //thêm 2 mảng enemy và enemybullet
 
-    public GameCanvas(){
-        this.background = new Background();
-        this.player = new Player();
-        GameCanvas.bullets = new ArrayList<>();
-        GameCanvas.enemies = new ArrayList<>();
-        GameCanvas.enemyBullets= new ArrayList<>();
+    public GameCanvas() {
+        this.background = GameObject.recycle(Background.class);
+        this.player = GameObject.recycle(Player.class);
 
-        Enemy enemy = new Enemy();
-        GameCanvas.enemies.add(enemy);
-        Enemy enemy1 = new Enemy();
-        enemy1.position.set(50,0);
-        Enemy enemy2 = new Enemy();
-        enemy2.position.set(100,0);
-
-        GameCanvas.enemies.add(enemy1);
-        GameCanvas.enemies.add(enemy2);
+        Enemy enemy = GameObject.recycle(Enemy.class);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        this.background.render(g);
-        this.player.render(g);
-        for(PlayerBullet bullet: bullets){
-            bullet.render(g);
-        }
-        for(Enemy enemy: enemies){
-            enemy.render(g);
-        }
-        for(EnemyBullet enemybullet: enemyBullets){
-            enemybullet.render(g);
+        //for (GameObject.gameObjects:GameObject.gameObjects){
+        for(int i=0;i<GameObject.gameObjects.size();i++){
+            GameObject gameObject=GameObject.gameObjects.get(i);
+            if (gameObject.isActive){
+                gameObject.render(g);
+            }
         }
     }
 
-    public void gameLoop(){
-        int delay = 1000/60;
+    public void gameLoop() {
+        int delay = 1000 / 60;
         long lastRun = 0;
-        while(true){
+        while (true) {
             long currentTime = System.currentTimeMillis();
-            if(currentTime - lastRun > delay) {
+            if (currentTime - lastRun > delay) {
                 this.runAll();
                 this.renderAll();
                 lastRun = currentTime;
@@ -65,21 +52,20 @@ public class GameCanvas extends JPanel {
         }
     }
 
-    public void runAll() {
-        this.background.run();
-        this.player.run();
-        for(PlayerBullet bullet : bullets){
-            bullet.run();
-        }
-        for(Enemy enemy: enemies){
-            enemy.run();
-        }
-        for(EnemyBullet enemyBullet: enemyBullets){
-            enemyBullet.run();
-        }
-    }
-    public void renderAll(){
+    public void renderAll() {
         this.repaint();
     }
+
+    public void runAll() {
+        for (int i=0;i<GameObject.gameObjects.size();i++){
+            GameObject gameObject=GameObject.gameObjects.get(i);
+            if (gameObject.isActive) {
+                gameObject.run();
+            }
+        }
+    //    System.out.println(GameObject.gameObjects.size());
+    }
 }
+
+
 

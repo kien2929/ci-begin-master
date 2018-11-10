@@ -1,32 +1,32 @@
 package base.enemy;
 
-import base.Background;
+import base.FrameCouter;
 import base.GameObject;
-import base.game.GameCanvas;
 import base.game.Settings;
 import renderer.AnimationRenderer;
-import renderer.SingleImageRenderer;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Set;
 
 public class Enemy extends GameObject {
+    FrameCouter fireCouter;
     public int IMAGE_WIDTH;
     public Enemy(){
         super();
 
        this.createrenderer();
         this.position.set(0,0);
+        this.fireCouter=new FrameCouter(20);
     }
     public void createrenderer(){
-        ArrayList<BufferedImage> images= new ArrayList<>();
-        images.add(SpriteUtils.loadImage("assets/images/enemies/level0/blue/0.png"));
-        images.add(SpriteUtils.loadImage("assets/images/enemies/level0/blue/1.png"));
-        images.add(SpriteUtils.loadImage("assets/images/enemies/level0/blue/2.png"));
-        images.add(SpriteUtils.loadImage("assets/images/enemies/level0/blue/3.png"));
-        this.renderer=new AnimationRenderer(images);
+       ArrayList<BufferedImage> images=SpriteUtils.loadImages(
+               "assets/images/enemies/level0/blue/0.png"  ,
+               "assets/images/enemies/level0/blue/1.png"  ,
+               "assets/images/enemies/level0/blue/2.png"  ,
+               "assets/images/enemies/level0/blue/3.png"
+               );
+       this.renderer=new AnimationRenderer(images);
     }
     boolean check=true;
     @Override
@@ -45,15 +45,11 @@ public class Enemy extends GameObject {
      }
         fire();
     }
-    int count=0;
     private void fire(){
-        if(count>20) {
-            EnemyBullet enemybullet = new EnemyBullet();
-            enemybullet.position.set(this.position.x, this.position.y);
-            GameCanvas.enemyBullets.add(enemybullet);
-            count =0;
-        }else{
-            count++;
+        if(this.fireCouter.run()) {
+            EnemyBullet enemybullet = GameObject.recycle(EnemyBullet.class);
+            enemybullet.position.set(this.position);
+            this.fireCouter.reset();
         }
     }
 }

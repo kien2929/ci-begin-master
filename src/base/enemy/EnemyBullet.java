@@ -1,6 +1,7 @@
 package base.enemy;
 
 import base.GameObject;
+import base.game.Settings;
 import renderer.SingleImageRenderer;
 import tklibs.SpriteUtils;
 
@@ -16,6 +17,9 @@ public class EnemyBullet extends GameObject {
     }
     @Override
     public void run(){
-        this.position.y++;
+        this.position.y+=5;
+        if(this.position.y> Settings.SCREEN_HEIGHT){
+            this.destroy();
+        }
     }
 }
