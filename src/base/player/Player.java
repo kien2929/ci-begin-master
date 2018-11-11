@@ -18,7 +18,7 @@ public class Player extends GameObject {
 //        this.renderer=new SingleImageRenderer(image);
         this.createrender();
         this.position.set(192, 300);
-        this.fireCouter = new FrameCouter(20);
+        this.fireCouter = new FrameCouter(15);
     }
 
     public void createrender() {
@@ -37,30 +37,51 @@ public class Player extends GameObject {
 
     @Override
     public void run() {
-        if (KeyEventPress.isUpPress) {
-            this.position.y--;
-        }
-        if (KeyEventPress.isDownPress) {
-            this.position.y++;
-        }
-        if (KeyEventPress.isLeftPress) {
-            this.position.x--;
-        }
-        if (KeyEventPress.isRightPress) {
-            this.position.x++;
-        }
-        if (KeyEventPress.isFirePress) {
+        this.move();
+
+        if (this.fireCouter.run() && KeyEventPress.isFirePress) {
             this.fire();
         }
+    }   public void move(){
+        //TODO upgrade
+        int vx=0;
+        int vy=0;
+        if (KeyEventPress.isUpPress) {
+//            this.velocity.set(0,-1);
+            vy-=1;
+        }
+        if (KeyEventPress.isDownPress) {
+//            this.velocity.set(0,1);
+            vy+=1;
+        }
+        if (KeyEventPress.isLeftPress) {
+//            this.velocity.set(-1,0);
+            vx-=1;
+        }
+        if (KeyEventPress.isRightPress) {
+//            this.velocity.set(1,0);
+            vx+=1;
+        }
+            this.velocity.set(vx,vy);
+
+
     }
 
     //TODO
     private void fire() {
-        if (this.fireCouter.run()) {
-            PlayerBullet bullett = GameObject.recycle(PlayerBullet.class);
-            bullett.position.set(this.position);
+
+            PlayerBulletType1 bullett1 = GameObject.recycle(PlayerBulletType1.class);
+            bullett1.position.set(this.position);
+
+            PlayerBulletType2 bullett2 = GameObject.recycle(PlayerBulletType2.class);
+            bullett2.position.set(this.position.add(-25,0));
+            bullett2.velocity.set(-2,-5);
+
+            PlayerBulletType2 bullett3 = GameObject.recycle(PlayerBulletType2.class);
+            bullett3.position.set(this.position.add(25,0));
+            bullett3.velocity.set(2,-5);
             this.fireCouter.reset();
-        }
+
 
     }
 }

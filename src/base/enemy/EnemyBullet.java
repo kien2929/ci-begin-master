@@ -13,13 +13,22 @@ public class EnemyBullet extends GameObject {
         BufferedImage image =SpriteUtils.loadImage("assets/images/enemies/bullets/blue.png");
         this.renderer=new SingleImageRenderer(image);
         this.position.set(0,0);
+        this.velocity.set(0,5);
 
+    }
+    private void destroyIfNeeded() {
+        if(this.position.y<20||this.position.y>=Settings.SCREEN_HEIGHT
+                ||this.position.x<0||this.position.x>=Settings.SCREEN_WIDTH){
+
+            this.destroy();
+        }
     }
     @Override
     public void run(){
-        this.position.y+=5;
-        if(this.position.y> Settings.SCREEN_HEIGHT){
-            this.destroy();
+        super.run();
+        if(this.position.y<-20||this.position.y> Settings.BACKGROUND_HEIGHT
+                ||this.position.x<-20||this.position.x> Settings.BACKGROUND_WIDTH){
+            this.destroyIfNeeded();
         }
     }
 }

@@ -14,17 +14,20 @@ public class GameObject {
     public Vector2D position;
     public Renderer renderer;
     public boolean isActive;
+    public Vector2D velocity;
     //createGameObject
     public GameObject(){
         this.position=new Vector2D();
+        this.velocity=new Vector2D();
         this.isActive=true;
+
     }
     public void destroy(){ this.isActive=false; }
 
     public void reset(){ this.isActive=true; }
 
     public void run(){
-
+        this.position.addThis(this.velocity);
     }
     public static <E extends GameObject> E create(Class<E>clazz){
     try {
@@ -49,7 +52,7 @@ public class GameObject {
     }
 
     private static boolean isValueRecycle(GameObject gameObject,Class clazz){
-        gameObject.isActive=false;
+
         return !gameObject.isActive && gameObject.getClass().isAssignableFrom(clazz);
     }
 

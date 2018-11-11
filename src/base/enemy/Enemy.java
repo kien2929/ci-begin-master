@@ -16,6 +16,7 @@ public class Enemy extends GameObject {
         super();
 
        this.createrenderer();
+      this.velocity.set(0,3);
         this.position.set(0,0);
         this.fireCouter=new FrameCouter(20);
     }
@@ -28,21 +29,21 @@ public class Enemy extends GameObject {
                );
        this.renderer=new AnimationRenderer(images);
     }
-    boolean check=true;
     @Override
     public void run(){
+       super.run();
      if(this.position.x<=0){
-         check=true;
+         this.velocity.set(3,0);
      }
      if(this.position.x>=(Settings.BACKGROUND_WIDTH-IMAGE_WIDTH-30)){
-         check=false;
+         this.velocity.set(-3,0);
      }
-     if(check){
-         this.position.addThis(3,0);
-     }
-     if(!check){
-         this.position.addThis(-3,0);
-     }
+//     if(check){
+//         this.position.addThis(3,0);
+//     }
+//     if(!check){
+//         this.position.addThis(-3,0);
+
         fire();
     }
     private void fire(){

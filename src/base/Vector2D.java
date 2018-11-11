@@ -32,8 +32,10 @@ public class Vector2D {
         return result;
     }
     public Vector2D substract(Vector2D other){
-        return this.substractThis(other.x,other.y);
+        return this.substract(other.x,other.y);
     }
+
+
     public Vector2D substractThis(float x, float y){
        this.x-=x;
        this.y-=y;
@@ -72,5 +74,8 @@ public class Vector2D {
         this.scaleThis(length/currentLength);
         return this;
     }
+//    public Vector2D setLength(){
+//
+//    }
 
     }
